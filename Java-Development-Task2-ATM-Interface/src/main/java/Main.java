@@ -1,5 +1,3 @@
-package oasis.atmInterface;
-
 import oasis.atmInterface.model.Account;
 import oasis.atmInterface.model.Atm;
 import oasis.atmInterface.model.Bank;

@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>oasis</groupId>
-	<artifactId>Java-Development-Task3-ATM-Interface</artifactId>
+	<artifactId>OIBSIP</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>

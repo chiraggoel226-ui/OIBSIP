@@ -1,6 +1,6 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
+../HELP.md
+Java-Development-Task2-ATM-Interface/target/
+Java-Development-Task2-ATM-Interface/.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -14,7 +14,7 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+Java-Development-Task2-ATM-Interface/.idea
 *.iws
 *.iml
 *.ipr
