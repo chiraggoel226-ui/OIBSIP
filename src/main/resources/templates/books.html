@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    ```
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Books - Digital Library</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    ```
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    ```
+    <div class="logo">
+        📚 Digital Library
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a th:href="@{/user/dashboard}">Home</a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/books}">Books</a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/my-books}">My Books</a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/bookings}">Bookings</a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/query}">Contact</a>
+        </li>
+
+        <li>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="nav-button">
+                    Logout
+                </button>
+            </form>
+        </li>
+
+    </ul>
+    ```
+
+</nav>
+
+<div class="container">
+
+    ```
+    <div class="page-title">
+
+        <h1>Book Catalogue</h1>
+
+        <p>
+            Browse and search for books available in the library.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH BY TITLE -->
+
+    <div class="search-box">
+
+        <form th:action="@{/user/books/search}" method="get">
+
+            <input
+                    type="text"
+                    name="keyword"
+                    placeholder="Search by title..."
+                    required>
+
+            <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                Search
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- SEARCH BY AUTHOR -->
+
+    <div class="search-box">
+
+        <form th:action="@{/user/books/author}" method="get">
+
+            <input
+                    type="text"
+                    name="author"
+                    placeholder="Search by author..."
+                    required>
+
+            <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                Search Author
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- CATEGORY -->
+
+    <div style="margin-bottom:30px;">
+
+        <form th:action="@{/user/books/category}" method="get">
+
+            <select
+                    name="category"
+                    style="padding:12px;
+                       width:250px;
+                       border:1px solid #cbd5e1;
+                       border-radius:6px;">
+
+                <option value="Programming">
+                    Programming
+                </option>
+
+                <option value="Database">
+                    Database
+                </option>
+
+                <option value="Fiction">
+                    Fiction
+                </option>
+
+                <option value="Science">
+                    Science
+                </option>
+
+                <option value="History">
+                    History
+                </option>
+
+            </select>
+
+            <button
+                    type="submit"
+                    class="btn btn-primary">
+
+                Filter
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- BOOK GRID -->
+
+    <div class="book-grid">
+
+        <div
+                class="book-card"
+                th:each="book : ${books}">
+
+            <h3 th:text="${book.title}">
+                Book Title
+            </h3>
+
+            <p>
+                <strong>Author:</strong>
+                <span th:text="${book.author}">
+                Author
+            </span>
+            </p>
+
+            <p>
+                <strong>ISBN:</strong>
+                <span th:text="${book.isbn}">
+                ISBN
+            </span>
+            </p>
+
+            <p>
+                <strong>Category:</strong>
+                <span th:text="${book.category}">
+                Category
+            </span>
+            </p>
+
+            <p>
+                <strong>Available:</strong>
+                <span th:text="${book.quantity}">
+                0
+            </span>
+            </p>
+
+
+            <!-- ISSUE BOOK -->
+
+            <form
+                    th:action="@{/user/issue/{id}(id=${book.id})}"
+                    method="post"
+                    style="display:inline;">
+
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                        th:disabled="${book.quantity <= 0}">
+
+                    Issue Book
+
+                </button>
+
+            </form>
+
+
+            <!-- ADVANCE BOOKING -->
+
+            <form
+                    th:action="@{/user/booking/{id}(id=${book.id})}"
+                    method="post"
+                    style="display:inline;">
+
+                <button
+                        type="submit"
+                        class="btn btn-secondary">
+
+                    Book Now
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- NO BOOKS -->
+
+        <div th:if="${#lists.isEmpty(books)}">
+
+            <p>
+                No books found.
+            </p>
+
+        </div>
+
+    </div>
+    ```
+
+</div>
+
+<footer class="footer">
+
+    ```
+    <p>
+        © 2026 Digital Library Management System
+    </p>
+    ```
+
+</footer>
+
+</body>
+
+</html>
