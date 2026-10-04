@@ -1,5 +1,6 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -17,8 +18,6 @@
 <body>
 
 <div class="admin-layout">
-
-    <!-- SIDEBAR -->
 
     <aside class="sidebar">
 
@@ -59,8 +58,6 @@
     </aside>
 
 
-    <!-- CONTENT -->
-
     <main class="admin-content">
 
         <h1>Manage Books</h1>
@@ -70,17 +67,13 @@
         </p>
 
 
-        <!-- ================= ADD BOOK ================= -->
-
         <div class="form-box"
              style="margin-bottom:40px;">
 
             <h2>Add New Book</h2>
 
-
             <form action="/admin/books/add"
                   method="post">
-
 
                 <div class="form-group">
 
@@ -171,8 +164,6 @@
         </div>
 
 
-        <!-- ================= BOOK LIST ================= -->
-
         <h2 style="margin-bottom:20px;">
             Existing Books
         </h2>
@@ -198,6 +189,8 @@
 
                     <th>Quantity</th>
 
+                    <th>Available</th>
+
                     <th>Actions</th>
 
                 </tr>
@@ -207,34 +200,51 @@
 
                 <tbody>
 
+                <tr th:each="book : ${books}">
 
-                <tr>
+                    <td th:text="${book.id}">
+                        1
+                    </td>
 
-                    <td>1</td>
+                    <td th:text="${book.title}">
+                        Java Programming
+                    </td>
 
-                    <td>Java Programming</td>
+                    <td th:text="${book.author}">
+                        James Gosling
+                    </td>
 
-                    <td>James Gosling</td>
+                    <td th:text="${book.isbn}">
+                        9780135166307
+                    </td>
 
-                    <td>9780135166307</td>
+                    <td th:text="${book.category}">
+                        Programming
+                    </td>
 
-                    <td>Programming</td>
+                    <td th:text="${book.quantity}">
+                        5
+                    </td>
 
-                    <td>5</td>
+                    <td th:text="${book.availableQuantity}">
+                        5
+                    </td>
 
                     <td>
 
-                        <a href="/admin/books/edit/1"
-                           class="btn btn-primary">
+                        <a
+                                th:href="@{/admin/books/edit/{id}(id=${book.id})}"
+                                class="btn btn-primary">
 
                             Edit
 
                         </a>
 
 
-                        <a href="/admin/books/delete/1"
-                           class="btn btn-danger"
-                           onclick="return confirmDelete()">
+                        <a
+                                th:href="@{/admin/books/delete/{id}(id=${book.id})}"
+                                class="btn btn-danger"
+                                onclick="return confirmDelete()">
 
                             Delete
 
@@ -245,42 +255,16 @@
                 </tr>
 
 
-                <tr>
+                <tr th:if="${#lists.isEmpty(books)}">
 
-                    <td>2</td>
+                    <td colspan="8"
+                        style="text-align:center; padding:25px; color:#64748b;">
 
-                    <td>Clean Code</td>
-
-                    <td>Robert C. Martin</td>
-
-                    <td>9780132350884</td>
-
-                    <td>Programming</td>
-
-                    <td>3</td>
-
-                    <td>
-
-                        <a href="/admin/books/edit/2"
-                           class="btn btn-primary">
-
-                            Edit
-
-                        </a>
-
-
-                        <a href="/admin/books/delete/2"
-                           class="btn btn-danger"
-                           onclick="return confirmDelete()">
-
-                            Delete
-
-                        </a>
+                        No books available.
 
                     </td>
 
                 </tr>
-
 
                 </tbody>
 
@@ -298,3 +282,4 @@
 </body>
 
 </html>
+```

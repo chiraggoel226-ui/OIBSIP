@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -62,7 +63,7 @@
         <h1>Registered Members</h1>
 
         <p style="margin:10px 0 30px; color:#64748b;">
-            View and manage registered library members.
+            View registered library members.
         </p>
 
 
@@ -80,13 +81,7 @@
 
                     <th>Email</th>
 
-                    <th>Username</th>
-
                     <th>Role</th>
-
-                    <th>Status</th>
-
-                    <th>Action</th>
 
                 </tr>
 
@@ -95,72 +90,41 @@
 
                 <tbody>
 
+                <tr th:each="user : ${users}">
 
-                <tr>
-
-                    <td>1</td>
-
-                    <td>Rahul Sharma</td>
-
-                    <td>rahul@example.com</td>
-
-                    <td>rahul123</td>
-
-                    <td>User</td>
-
-                    <td>
-                        <span style="color:#16a34a;">
-                            Active
-                        </span>
+                    <td th:text="${user.id}">
+                        1
                     </td>
 
-                    <td>
 
-                        <button
-                                class="btn btn-danger"
-                                onclick="disableUser(1)">
+                    <td th:text="${user.name}">
+                        Rahul Sharma
+                    </td>
 
-                            Disable
 
-                        </button>
+                    <td th:text="${user.email}">
+                        rahul@example.com
+                    </td>
 
+
+                    <td th:text="${user.role}">
+                        USER
                     </td>
 
                 </tr>
 
 
-                <tr>
+                <tr th:if="${#lists.isEmpty(users)}">
 
-                    <td>2</td>
+                    <td
+                            colspan="4"
+                            style="text-align:center; padding:25px; color:#64748b;">
 
-                    <td>Aman Kumar</td>
-
-                    <td>aman@example.com</td>
-
-                    <td>aman123</td>
-
-                    <td>User</td>
-
-                    <td>
-                        <span style="color:#16a34a;">
-                            Active
-                        </span>
-                    </td>
-
-                    <td>
-
-                        <button
-                                class="btn btn-danger"
-                                onclick="disableUser(2)">
-
-                            Disable
-
-                        </button>
+                        No registered members found.
 
                     </td>
 
                 </tr>
-
 
                 </tbody>
 
@@ -171,36 +135,6 @@
     </main>
 
 </div>
-
-
-<script>
-
-    function disableUser(userId) {
-
-        let confirmAction =
-            confirm(
-                "Are you sure you want to disable this member?"
-            );
-
-        if (confirmAction) {
-
-            /*
-             * Backend connection later:
-             *
-             * fetch("/admin/users/disable/" + userId, {
-             *     method: "PUT"
-             * });
-             */
-
-            alert(
-                "Member status update requested."
-            );
-
-        }
-
-    }
-
-</script>
 
 </body>
 

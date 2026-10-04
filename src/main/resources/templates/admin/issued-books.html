@@ -1,5 +1,6 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -93,69 +94,70 @@
 
                 <tbody>
 
+                <tr th:each="issue : ${issues}">
 
-                <tr>
-
-                    <td>101</td>
-
-                    <td>Java Programming</td>
-
-                    <td>Rahul Sharma</td>
-
-                    <td>25-09-2026</td>
-
-                    <td>09-10-2026</td>
-
-                    <td>
-                        <span style="color:#16a34a;">
-                            Active
-                        </span>
+                    <td th:text="${issue.id}">
+                        101
                     </td>
 
-                </tr>
+
+                    <td th:text="${issue.book.title}">
+                        Java Programming
+                    </td>
 
 
-                <tr>
+                    <td th:text="${issue.user.name}">
+                        Rahul Sharma
+                    </td>
 
-                    <td>102</td>
 
-                    <td>Clean Code</td>
+                    <td th:text="${issue.issueDate}">
+                        2026-09-25
+                    </td>
 
-                    <td>Aman Kumar</td>
 
-                    <td>15-09-2026</td>
+                    <td th:text="${issue.dueDate}">
+                        2026-10-09
+                    </td>
 
-                    <td>29-09-2026</td>
 
                     <td>
-                        <span style="color:#dc2626;">
+
+                        <span
+                                th:if="${issue.status == 'OVERDUE'}"
+                                style="color:#dc2626;"
+                                th:text="${issue.status}">
+
                             Overdue
+
                         </span>
-                    </td>
-
-                </tr>
 
 
-                <tr>
+                        <span
+                                th:if="${issue.status != 'OVERDUE'}"
+                                style="color:#16a34a;"
+                                th:text="${issue.status}">
 
-                    <td>103</td>
-
-                    <td>Spring Boot in Action</td>
-
-                    <td>Priya Singh</td>
-
-                    <td>28-09-2026</td>
-
-                    <td>12-10-2026</td>
-
-                    <td>
-                        <span style="color:#16a34a;">
                             Active
+
                         </span>
+
                     </td>
 
                 </tr>
 
+
+                <tr th:if="${#lists.isEmpty(issues)}">
+
+                    <td
+                            colspan="6"
+                            style="text-align:center; padding:25px; color:#64748b;">
+
+                        No books are currently issued.
+
+                    </td>
+
+                </tr>
 
                 </tbody>
 
@@ -170,3 +172,4 @@
 </body>
 
 </html>
+```

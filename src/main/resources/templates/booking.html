@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -10,14 +12,13 @@
 
     <title>Book Reservations - Digital Library</title>
 
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
 
 </head>
 
 <body>
 
-
-<!-- ================= NAVBAR ================= -->
 
 <nav class="navbar">
 
@@ -28,31 +29,39 @@
     <ul class="nav-links">
 
         <li>
-            <a href="/">Home</a>
+            <a th:href="@{/}">
+                Home
+            </a>
         </li>
 
         <li>
-            <a href="/books">Books</a>
+            <a th:href="@{/books}">
+                Books
+            </a>
         </li>
 
         <li>
-            <a href="/my-books">My Books</a>
+            <a th:href="@{/my-books}">
+                My Books
+            </a>
         </li>
 
         <li>
-            <a href="/booking">Bookings</a>
+            <a th:href="@{/booking}">
+                Bookings
+            </a>
         </li>
 
         <li>
-            <a href="/contact">Contact</a>
+            <a th:href="@{/contact}">
+                Contact
+            </a>
         </li>
 
     </ul>
 
 </nav>
 
-
-<!-- ================= BOOKINGS ================= -->
 
 <div class="container">
 
@@ -66,8 +75,6 @@
 
     </div>
 
-
-    <!-- BOOKING TABLE -->
 
     <div class="table-container">
 
@@ -94,76 +101,107 @@
 
             <tbody>
 
+            <tr th:each="booking : ${bookings}">
 
-            <tr>
-
-                <td>
+                <td th:text="${booking.book.title}">
                     Database System Concepts
                 </td>
 
-                <td>
+
+                <td th:text="${booking.book.author}">
                     Abraham Silberschatz
                 </td>
 
-                <td>
-                    28-09-2026
+
+                <td th:text="${booking.bookingDate}">
+                    2026-09-28
                 </td>
 
+
                 <td>
-                    <span style="color:#2563eb;">
+
+                    <span
+                            th:if="${booking.status == 'RESERVED'}"
+                            style="color:#2563eb;"
+                            th:text="${booking.status}">
+
                         Reserved
+
                     </span>
-                </td>
-
-                <td>
-
-                    <button
-                            class="btn btn-danger"
-                            onclick="cancelBooking(1)">
-
-                        Cancel
-
-                    </button>
-
-                </td>
-
-            </tr>
 
 
-            <tr>
+                    <span
+                            th:if="${booking.status == 'AVAILABLE'}"
+                            style="color:#16a34a;"
+                            th:text="${booking.status}">
 
-                <td>
-                    Spring Boot in Action
-                </td>
-
-                <td>
-                    Craig Walls
-                </td>
-
-                <td>
-                    30-09-2026
-                </td>
-
-                <td>
-                    <span style="color:#16a34a;">
                         Available Soon
+
                     </span>
+
+
+                    <span
+                            th:if="${booking.status == 'CANCELLED'}"
+                            style="color:#dc2626;"
+                            th:text="${booking.status}">
+
+                        Cancelled
+
+                    </span>
+
+
+                    <span
+                            th:if="${booking.status != 'RESERVED'
+                                   and booking.status != 'AVAILABLE'
+                                   and booking.status != 'CANCELLED'}"
+                            th:text="${booking.status}">
+
+                        Status
+
+                    </span>
+
                 </td>
+
 
                 <td>
 
-                    <button
-                            class="btn btn-danger"
-                            onclick="cancelBooking(2)">
+                    <form
+                            th:if="${booking.status != 'CANCELLED'}"
+                            th:action="@{/user/booking/cancel/{id}(id=${booking.id})}"
+                            method="post">
 
-                        Cancel
+                        <button
+                                type="submit"
+                                class="btn btn-danger"
+                                onclick="return confirm('Do you want to cancel this reservation?')">
 
-                    </button>
+                            Cancel
+
+                        </button>
+
+                    </form>
+
+
+                    <span th:if="${booking.status == 'CANCELLED'}">
+                        -
+                    </span>
 
                 </td>
 
             </tr>
 
+
+            <tr th:if="${#lists.isEmpty(bookings)}">
+
+                <td
+                        colspan="5"
+                        style="text-align:center; padding:25px; color:#64748b;">
+
+                    You have no book reservations.
+
+                </td>
+
+            </tr>
 
             </tbody>
 
@@ -182,37 +220,7 @@
 
 </footer>
 
-
-<script>
-
-    function cancelBooking(bookingId) {
-
-        let confirmCancel =
-            confirm(
-                "Do you want to cancel this reservation?"
-            );
-
-        if (confirmCancel) {
-
-            /*
-             * Backend connection later:
-             *
-             * fetch("/user/booking/cancel/" + bookingId, {
-             *     method: "DELETE"
-             * });
-             */
-
-            alert(
-                "Booking cancellation request sent."
-            );
-
-        }
-
-    }
-
-</script>
-
-
 </body>
 
 </html>
+```
