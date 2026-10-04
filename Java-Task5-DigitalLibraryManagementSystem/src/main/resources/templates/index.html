@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    ```
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard - Digital Library</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+    ```
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    ```
+    <div class="logo">
+        📚 Digital Library
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a th:href="@{/user/dashboard}">
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/books}">
+                Books
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/my-books}">
+                My Books
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/bookings}">
+                Bookings
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/fines}">
+                Fines
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/user/query}">
+                Contact
+            </a>
+        </li>
+
+        <li>
+            <form th:action="@{/logout}"
+                  method="post">
+
+                <button type="submit"
+                        class="nav-button">
+                    Logout
+                </button>
+
+            </form>
+        </li>
+
+    </ul>
+    ```
+
+</nav>
+
+<!-- ================= DASHBOARD HEADER ================= -->
+
+<section class="dashboard-hero">
+
+    ```
+    <div class="dashboard-hero-content">
+
+        <p class="dashboard-label">
+            USER DASHBOARD
+        </p>
+
+        <h1>
+            Welcome,
+            <span th:text="${user.name}">
+            User
+        </span>
+            👋
+        </h1>
+
+        <p>
+            Manage your books, bookings, returns and fines
+            from one place.
+        </p>
+
+        <div class="dashboard-actions">
+
+            <a th:href="@{/user/books}"
+               class="btn btn-primary">
+
+                Browse Books
+
+            </a>
+
+            <a th:href="@{/user/my-books}"
+               class="btn btn-secondary">
+
+                My Books
+
+            </a>
+
+        </div>
+
+    </div>
+    ```
+
+</section>
+
+<!-- ================= QUICK ACTIONS ================= -->
+
+<div class="container">
+
+    ```
+    <div class="page-title">
+
+        <h1>Library Dashboard</h1>
+
+        <p>
+            Choose an option to manage your library account.
+        </p>
+
+    </div>
+
+
+    <div class="dashboard-grid">
+
+
+        <!-- BOOKS -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                📚
+            </div>
+
+            <h3>
+                Browse Books
+            </h3>
+
+            <p>
+                Search books by title, author or category
+                and issue available books.
+            </p>
+
+            <a th:href="@{/user/books}"
+               class="dashboard-link">
+
+                Explore Books →
+
+            </a>
+
+        </div>
+
+
+        <!-- MY BOOKS -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                📖
+            </div>
+
+            <h3>
+                My Books
+            </h3>
+
+            <p>
+                View your issued books, issue dates and
+                due dates. Return books from here.
+            </p>
+
+            <a th:href="@{/user/my-books}"
+               class="dashboard-link">
+
+                View My Books →
+
+            </a>
+
+        </div>
+
+
+        <!-- BOOKINGS -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                🔖
+            </div>
+
+            <h3>
+                My Bookings
+            </h3>
+
+            <p>
+                View books you have reserved through
+                advance booking.
+            </p>
+
+            <a th:href="@{/user/bookings}"
+               class="dashboard-link">
+
+                View Bookings →
+
+            </a>
+
+        </div>
+
+
+        <!-- FINES -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                💰
+            </div>
+
+            <h3>
+                My Fines
+            </h3>
+
+            <p>
+                Check overdue fines generated for your
+                returned or pending books.
+            </p>
+
+            <a th:href="@{/user/fines}"
+               class="dashboard-link">
+
+                View Fines →
+
+            </a>
+
+        </div>
+
+
+        <!-- CONTACT -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                📩
+            </div>
+
+            <h3>
+                Contact Library
+            </h3>
+
+            <p>
+                Have a question or issue? Send a query
+                directly to the administrator.
+            </p>
+
+            <a th:href="@{/user/query}"
+               class="dashboard-link">
+
+                Send Query →
+
+            </a>
+
+        </div>
+
+
+        <!-- PROFILE -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-icon">
+                👤
+            </div>
+
+            <h3>
+                My Account
+            </h3>
+
+            <p>
+                Logged in as
+                <strong th:text="${user.email}">
+                    user@example.com
+                </strong>
+            </p>
+
+            <span class="account-role">
+            USER
+        </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= INFORMATION ================= -->
+
+    <div class="dashboard-info">
+
+        <div>
+
+            <h2>
+                📌 Library Guidelines
+            </h2>
+
+            <ul>
+
+                <li>
+                    Return books before the due date.
+                </li>
+
+                <li>
+                    Overdue books may generate a fine.
+                </li>
+
+                <li>
+                    You can reserve currently unavailable books.
+                </li>
+
+                <li>
+                    Contact the administrator for any issue.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="dashboard-info-action">
+
+            <h2>
+                Ready to read?
+            </h2>
+
+            <p>
+                Explore the complete library catalogue.
+            </p>
+
+            <a th:href="@{/user/books}"
+               class="btn btn-primary">
+
+                Browse Catalogue
+
+            </a>
+
+        </div>
+
+    </div>
+    ```
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    ```
+    <p>
+        © 2026 Digital Library Management System
+    </p>
+    ```
+
+</footer>
+
+</body>
+
+</html>
